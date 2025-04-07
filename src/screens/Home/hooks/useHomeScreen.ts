@@ -1,29 +1,17 @@
-import { fetchNews } from "@/services/api";
-import { usePreferencesStore } from "@/store";
-import React from "react";
-import { useEffect } from "react";
+import { fetchAllArticles } from "@/services/api";
 
-import { useQuery } from "react-query";
-
-export const fetchAllArticles = async (category: string[]) => {
-  const api = process.env.EXPO_PUBLIC_NEWS_LAST_URL;
-
-  const response = await fetch(
-    `${api}language=pt&category=${category}&apikey=pub_78082765991020c3d0b6a44052ff7ae1ecc84`
-  );
-
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  return response.json();
-};
+import { UseNewsStore } from "@/store/newsStore";
 
 export const useHomeScreen = async (category: string[]) => {
   //const data = fetchNews();
-
+  const newStore = UseNewsStore.getState();
   try {
     const response = await fetchAllArticles(category);
-    console.log("Fetched data:", response);
+    console.log(response.results);
+    newStore.setResults(response.results);
+    newStore.setStatus(response.status);
+    newStore.setTotalResults(response.totalResults);
+    newStore.setNextPage(response.nextPage);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
