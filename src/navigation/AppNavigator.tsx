@@ -5,6 +5,7 @@ import { HomeScreen } from "../screens/Home/HomeScreen";
 import { NewsDetailsScreen } from "../screens/NewsDetails/NewsDetailsScreen";
 import { PreferencesComponent } from "../screens/Home/components";
 import { NewsResult } from "@/store/types/news.types";
+import { useNavigationState } from "@react-navigation/native";
 
 // Tipos para a navegação
 export type RootStackParamList = {
@@ -35,8 +36,8 @@ function NewsStack() {
         name="NewsDetails"
         component={NewsDetailsScreen}
         options={{
-          title: "Detalhes",
-          headerBackTitle: "Voltar",
+          title: " ",
+          headerBackTitle: " ",
           headerShown: true,
         }}
       />
@@ -61,7 +62,7 @@ export const AppNavigator = () => {
         name="MainStack"
         component={NewsStack}
         options={{
-          title: "Notícias",
+          title: "News App",
           drawerLabel: "Notícias",
           headerShown: true,
         }}

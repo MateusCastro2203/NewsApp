@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, SafeAreaView } from "react-native";
 import { useOnboardingStore } from "../store/onboarding";
 import { MultiSelect } from "./MultiSelect";
 import { usePreferencesStore } from "../store/preferencesStore";
