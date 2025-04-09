@@ -26,11 +26,11 @@ export function NewsImage({ imageUrl, className, ...props }: NewsImageProps) {
         className="w-full h-full"
         {...props}
       />
-      {/* {isLoading && (
+      {isLoading && (
         <View className="absolute inset-0 flex items-center justify-center bg-gray-100">
           <ActivityIndicator size="large" color="#3b82f6" />
         </View>
-      )} */}
+      )}
     </View>
   );
 }
