@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { NewsResult } from "@/store/types/news.types";
 import { RootStackParamList } from "@/navigation/AppNavigator";
 import { FavoriteButton } from "@/components/FavoriteButton";
-
+import { NewsImage } from "./NewsImage";
 interface NewsCardProps {
   item: NewsResult;
   showFavoriteButton?: boolean;
@@ -28,8 +28,8 @@ export const NewsCard = ({
       onPress={handlePress}
       className="w-full mb-4 rounded-lg overflow-hidden shadow-md bg-white"
     >
-      <Image
-        source={{ uri: item.image_url }}
+      <NewsImage
+        imageUrl={item.image_url}
         className="w-full h-52"
         resizeMode="cover"
       />
