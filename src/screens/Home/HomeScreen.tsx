@@ -44,6 +44,10 @@ export const HomeScreen = () => {
             <NewsCard item={item} key={item.article_id} />
           )}
           keyExtractor={(item) => item.article_id}
+          onScrollBeginDrag={() => {
+            setDataFetched(false);
+          }}
+          refreshing={!dataFetched}
         />
       </View>
     </SafeAreaView>
