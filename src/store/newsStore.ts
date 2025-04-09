@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NewsResponse, NewsResult } from "./types/news.types";
+import { NewsResponse, NewsResult, SavedNews } from "./types/news.types";
 
 // Interface estendida com todas as ações
 interface NewsStore extends NewsResponse {

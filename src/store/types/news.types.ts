@@ -32,3 +32,13 @@ export interface NewsResponse {
   status: "success" | "error"; // Status da resposta
   totalResults: number; // Total de resultados disponíveis
 }
+
+export interface SavedNews extends NewsResult {
+  savedAt: string;
+}
+export interface FavoritesStore {
+  savedNews: SavedNews[];
+  addToFavorites: (news: NewsResult) => void;
+  removeFromFavorites: (articleId: string) => void;
+  isFavorite: (articleId: string) => boolean;
+}

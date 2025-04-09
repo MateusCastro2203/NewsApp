@@ -5,7 +5,7 @@ import { HomeScreen } from "../screens/Home/HomeScreen";
 import { NewsDetailsScreen } from "../screens/NewsDetails/NewsDetailsScreen";
 import { PreferencesComponent } from "../screens/Home/components";
 import { NewsResult } from "@/store/types/news.types";
-import { useNavigationState } from "@react-navigation/native";
+import { FavoritesScreen } from "@/screens/FavoritesNews/FavoritesScreen";
 
 // Tipos para a navegação
 export type RootStackParamList = {
@@ -16,6 +16,7 @@ export type RootStackParamList = {
 export type RootDrawerParamList = {
   MainStack: undefined;
   Settings: undefined;
+  Favorites: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -65,6 +66,14 @@ export const AppNavigator = () => {
           title: "News App",
           drawerLabel: "Notícias",
           headerShown: true,
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          title: "Favoritos",
+          drawerLabel: "Favoritos",
         }}
       />
       <Drawer.Screen
