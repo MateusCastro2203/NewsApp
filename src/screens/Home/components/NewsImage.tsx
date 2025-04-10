@@ -11,7 +11,6 @@ const DEFAULT_IMAGE = require("@/assets/images/news-placeholder.png");
 export function NewsImage({ imageUrl, className, ...props }: NewsImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  console.log("HAS ERROR", imageUrl);
 
   return (
     <View className={`relative ${className}`}>

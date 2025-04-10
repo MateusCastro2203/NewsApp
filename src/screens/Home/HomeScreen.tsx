@@ -11,6 +11,7 @@ import { usePreferencesStore } from "@/store";
 import { UseNewsStore } from "@/store/newsStore";
 import { FlatList } from "react-native-gesture-handler";
 import { NewsCard } from "./components/NewsCard";
+import { SearchNews } from "@/components/SearchNews";
 
 export const HomeScreen = () => {
   const { category } = usePreferencesStore();
@@ -30,14 +31,10 @@ export const HomeScreen = () => {
     fetchData();
   }, [category, dataFetched]);
 
-  const handlePress = () => {
-    console.log("aqui ");
-    //navigation.navigate("NewsDetails", { article: item });
-  };
-
   return (
     <SafeAreaView className="flex-1 bg-slate-100">
       <View className="w-full h-full items-centerr px-4 ">
+        <SearchNews />
         <FlatList
           data={results}
           renderItem={({ item }) => (
