@@ -1,25 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
-
-const options = [
-  { label: "Negócios", value: "business" },
-  { label: "Crime", value: "crime" },
-  { label: "Doméstico", value: "domestic" },
-  { label: "Educação", value: "education" },
-  { label: "Entretenimento", value: "entertainment" },
-  { label: "Meio Ambiente", value: "environment" },
-  { label: "Comida", value: "food" },
-  { label: "Saúde", value: "health" },
-  { label: "Estilo de Vida", value: "lifestyle" },
-  { label: "Outros", value: "other" },
-  { label: "Política", value: "politics" },
-  { label: "Ciência", value: "science" },
-  { label: "Esportes", value: "sports" },
-  { label: "Tecnologia", value: "technology" },
-  { label: "Top", value: "top" },
-  { label: "Turismo", value: "tourism" },
-  { label: "Mundo", value: "world" },
-];
+import { options } from "@/store/types/onboarding";
 
 interface MultiSelectProps {
   selected: string[];

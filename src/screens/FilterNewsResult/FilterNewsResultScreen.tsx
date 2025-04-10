@@ -6,7 +6,6 @@ import { useNewsFilterStore } from "@/store/filterStore";
 
 export const FilterNewsResultScreen = () => {
   const { results } = useNewsFilterStore();
-  console.log("results", results);
   return (
     <SafeAreaView className="flex-1 bg-slate-100">
       <View className="w-full h-full items-centerr px-4 ">
