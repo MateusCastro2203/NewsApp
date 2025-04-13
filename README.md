@@ -1,99 +1,124 @@
-# 📰 NewsApp
+# NewsApp
 
-Um aplicativo de notícias moderno desenvolvido com React Native e Expo, oferecendo uma experiência fluida para leitura de notícias.
+Um aplicativo de notícias moderno desenvolvido com React Native e Expo, oferecendo uma experiência rica de leitura com suporte a funcionalidades offline.
 
-## 🚀 Tecnologias
+## 🚀 Funcionalidades
 
-- [React Native](https://reactnative.dev/)
-- [Expo](https://expo.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [React Navigation](https://reactnavigation.org/)
-- [NativeWind](https://www.nativewind.dev/)
-- [Zustand](https://zustand-demo.pmnd.rs/)
-- [NewsData.io API](https://newsdata.io/)
+- **Feed de Notícias**
 
-## ✨ Funcionalidades
+  - Lista de notícias atualizadas
+  - Visualização detalhada de cada notícia
+  - Suporte a imagens e conteúdo rico
 
-- 📱 Interface moderna e responsiva
-- 🔍 Filtragem por categorias de notícias
-- 💾 Persistência local de preferências
-- ❤️ Sistema de favoritos
-- 🌙 Onboarding intuitivo
-- 🔄 Atualização em tempo real
-- 📖 Modo de leitura detalhada
-- 🌐 Suporte a WebView para notícias completas
+- **Pesquisa e Filtros**
 
-## 📦 Instalação
+  - Busca por palavras-chave
+  - Filtros por categoria
+  - Resultados personalizados
+
+- **Favoritos**
+
+  - Salvar notícias favoritas
+  - Gerenciamento de lista de favoritos
+  - Acesso rápido ao conteúdo salvo
+
+- **Modo Offline**
+
+  - Download de notícias para leitura offline
+  - Gerenciamento automático de armazenamento
+  - Indicadores de conteúdo disponível offline
+  - Sincronização inteligente
+
+- **Compartilhamento**
+  - Compartilhar notícias
+  - Suporte a múltiplas plataformas
+
+## 🛠 Tecnologias
+
+- React Native
+- Expo
+- TypeScript
+- TailwindCSS (NativeWind)
+- Zustand (Gerenciamento de Estado)
+- React Navigation
+- Expo FileSystem
+- NetInfo
+
+## 📱 Screenshots
+
+[Adicionar screenshots do app aqui]
+
+## 🔧 Instalação
+
+1. Clone o repositório:
 
 ```bash
-# Clone o repositório
 git clone https://github.com/seu-usuario/NewsApp.git
+```
 
-# Acesse a pasta do projeto
+2. Instale as dependências:
+
+```bash
 cd NewsApp
-
-# Instale as dependências
 npm install
-
-# Execute o projeto
-npx expo start
 ```
 
-## 🔧 Configuração
+3. Crie um development build:
 
-1. Crie uma conta em [NewsData.io](https://newsdata.io/)
-2. Obtenha sua API Key
-3. Crie um arquivo `.env` na raiz do projeto:
-
-```env
-NEWSDATA_API_KEY=sua_api_key_aqui
+```bash
+npx expo prebuild
 ```
 
-## 📱 Estrutura do Projeto
+4. Execute o projeto:
+
+```bash
+# iOS
+npx expo run:ios
+
+# Android
+npx expo run:android
+```
+
+## 📄 Estrutura do Projeto
 
 src/
 ├── components/ # Componentes reutilizáveis
-├── navigation/ # Configuração de navegação
 ├── screens/ # Telas do aplicativo
 ├── services/ # Serviços e APIs
 ├── store/ # Gerenciamento de estado
+├── hooks/ # Hooks customizados
+├── navigation/ # Configuração de navegação
 └── types/ # Definições de tipos
 
-## 🎯 Principais Features
+## 🔄 Estado do Projeto
 
-### Sistema de Favoritos
+### Implementado
 
-- Salve notícias para leitura posterior
-- Gerenciamento local de favoritos
-- Sincronização automática
+- ✅ Feed principal de notícias
+- ✅ Sistema de favoritos
+- ✅ Pesquisa e filtros
+- ✅ Suporte offline básico
+- ✅ Navegação entre telas
+- ✅ Compartilhamento de notícias
 
-### Categorias Personalizadas
+### Em Desenvolvimento
 
-- Selecione suas categorias preferidas
-- Filtragem inteligente de conteúdo
-- Preferências persistentes
+- 🔄 Melhorias no modo offline
+- 🔄 Otimizações de performance
+- 🔄 Testes automatizados
+- 🔄 Analytics e monitoramento
 
-### Modo de Leitura
+### Planejado
 
-- Visualização otimizada para leitura
-- Suporte a WebView
-- Compartilhamento de notícias
+- 📋 Notificações push
+- 📋 Temas (dark/light mode)
+- 📋 Internacionalização
+- 📋 Mais opções de compartilhamento
 
 ## 🤝 Contribuindo
 
-1. Fork o projeto
-2. Crie sua Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit suas alterações (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a Branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+Contribuições são sempre bem-vindas! Por favor, leia o guia de contribuição antes de submeter alterações.
 
-## 👨‍💻 Autor
+## 👥 Autores
 
-Mateus Castro - [@MateustCastro](https://x.com/MateustCastro)
-
-## 🙏 Agradecimentos
-
-- [NewsData.io](https://newsdata.io/) pela API de notícias
-- [Expo](https://expo.dev/) pelo excelente framework
-- [React Navigation](https://reactnavigation.org/) pela navegação fluida
-- [NativeWind](https://www.nativewind.dev/) pelo estilo elegante
+- Mateus Castro (@MateusTCastro2203)
