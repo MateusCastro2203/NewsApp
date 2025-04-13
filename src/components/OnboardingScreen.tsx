@@ -25,6 +25,7 @@ export function OnboardingScreen() {
           onPress={() => {
             setFirstTimeCompleted();
           }}
+          disabled={category.length === 0}
         />
       </View>
     </SafeAreaView>

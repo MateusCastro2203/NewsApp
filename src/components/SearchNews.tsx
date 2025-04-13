@@ -25,11 +25,11 @@ export function SearchNews() {
   };
 
   return (
-    <View className="px-4 py-2 flex-row">
+    <View className="flex-row justify-center items-center">
       <TextInput
         value={searchQuery}
         placeholder="Buscar notícias..."
-        className="h-10 border border-gray-300 rounded-lg px-4 mb-4 bg-white w-8/12"
+        className="h-10 border border-gray-300 rounded-lg  px-4  bg-white w-7/12"
         placeholderTextColor="#9ca3af"
         onChangeText={setSearchQuery}
         onSubmitEditing={onSearch}

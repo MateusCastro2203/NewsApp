@@ -2,7 +2,7 @@ import { NewsResponse } from "@/store/types/news.types";
 import { FilterState } from "@/store/types/filter.types";
 
 const key = process.env.EXPO_PUBLIC_NEWS_API_KEY;
-const BASE_URL = "https://newsdata.io/api/1/latest";
+const BASE_URL = process.env.EXPO_PUBLIC_NEWS_LAST_URL;
 
 export const fetchAllArticles = async (
   category: string[]
@@ -36,7 +36,6 @@ export const fetchArticlesByQuery = async ({
       apikey: key,
     });
 
-    // Adiciona parâmetros conforme a documentação
     if (searchQuery) params.append("q", searchQuery);
     params.append("language", language || "pt");
 

@@ -7,58 +7,30 @@ import { PreferencesComponent } from "../screens/Home/components";
 import { NewsResult } from "@/store/types/news.types";
 import { FavoritesScreen } from "@/screens/FavoritesNews/FavoritesScreen";
 import { FilterNewsResultScreen } from "@/screens/FilterNewsResult/FilterNewsResultScreen";
+import { OfflineContentScreen } from "@/screens/OfflineContent/OfflineContentScreen";
+import { Ionicons } from "@expo/vector-icons";
+
 // Tipos para a navegação
 export type RootStackParamList = {
-  Home: undefined;
+  Voltar: undefined;
   NewsDetails: { article: NewsResult };
-  FilterNewsResult: undefined;
 };
 
 export type RootDrawerParamList = {
-  MainStack: undefined;
-  Settings: undefined;
+  Home: undefined;
   Favorites: undefined;
+  Settings: undefined;
+  OfflineContent: undefined;
+  FilterNewsResult: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
-function NewsStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: "Notícias",
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="NewsDetails"
-        component={NewsDetailsScreen}
-        options={{
-          title: "",
-          headerTransparent: true,
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
-        name="FilterNewsResult"
-        component={FilterNewsResultScreen}
-        options={{
-          headerTransparent: true,
-          headerTitle: "Resultados",
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-export const AppNavigator = () => {
+function DrawerNavigator() {
   return (
     <Drawer.Navigator
-      initialRouteName="MainStack"
+      initialRouteName="Home"
       screenOptions={{
         headerShown: true,
         drawerType: "front",
@@ -68,12 +40,21 @@ export const AppNavigator = () => {
       }}
     >
       <Drawer.Screen
-        name="MainStack"
-        component={NewsStack}
+        name="Home"
+        component={HomeScreen}
         options={{
           title: "News App",
           drawerLabel: "Notícias",
-          headerShown: true,
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="FilterNewsResult"
+        component={FilterNewsResultScreen}
+        options={{
+          title: "Resultados da Pesquisa",
+          drawerLabel: "Resultados da Pesquisa",
+          headerTransparent: false,
         }}
       />
       <Drawer.Screen
@@ -92,6 +73,37 @@ export const AppNavigator = () => {
           drawerLabel: "Configurações",
         }}
       />
+      <Drawer.Screen
+        name="OfflineContent"
+        component={OfflineContentScreen}
+        options={{
+          title: "Notícias Baixadas",
+          drawerLabel: "Notícias Baixadas",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="cloud-offline" size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
+  );
+}
+
+export const AppNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Voltar"
+        component={DrawerNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NewsDetails"
+        component={NewsDetailsScreen}
+        options={{
+          title: "Detalhes",
+          headerShown: true,
+        }}
+      />
+    </Stack.Navigator>
   );
 };

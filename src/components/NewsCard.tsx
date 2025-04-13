@@ -6,26 +6,18 @@ import { NewsResult } from "@/store/types/news.types";
 import { RootStackParamList } from "@/navigation/AppNavigator";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { NewsImage } from "./NewsImage";
-import { options } from "@/store/types/onboarding";
+import { OfflineButton } from "./OfflineButton";
 interface NewsCardProps {
   item: NewsResult;
   showFavoriteButton?: boolean;
+  handlePress?: () => void;
 }
-
-type NewsNavigationProp = NativeStackNavigationProp<RootStackParamList, "Home">;
 
 export const NewsCard = ({
   item,
   showFavoriteButton = true,
+  handlePress,
 }: NewsCardProps) => {
-  const navigation = useNavigation<NewsNavigationProp>();
-
-  const handlePress = () => {
-    navigation.navigate("NewsDetails", { article: item });
-  };
-
-  const category = options.find((option) => option.value === item.category[0]);
-  console.log("category", category?.label);
   return (
     <TouchableOpacity
       onPress={handlePress}
@@ -39,6 +31,7 @@ export const NewsCard = ({
       {showFavoriteButton && (
         <View className="absolute top-2 right-2">
           <FavoriteButton article={item} />
+          <OfflineButton article={item} />
         </View>
       )}
 
@@ -49,7 +42,6 @@ export const NewsCard = ({
         <Text className="text-sm text-gray-600 mt-2" numberOfLines={3}>
           {item.description}
         </Text>
-        <Text className="text-md text-gray-700 mt-2">{category?.label}</Text>
       </View>
     </TouchableOpacity>
   );
