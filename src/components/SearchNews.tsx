@@ -6,13 +6,13 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
-import { useSearchNews } from "@/screens/Home/hooks/useHomeScreen";
+import { useHomeScreen } from "@/screens/Home/hooks/useHomeScreen";
 
 export function SearchNews() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { useSearchNews } = useHomeScreen();
   const { handleSearch } = useSearchNews();
-
   const onSearch = async () => {
     if (!searchQuery.trim()) return;
 

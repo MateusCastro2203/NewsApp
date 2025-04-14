@@ -5,7 +5,8 @@ const key = process.env.EXPO_PUBLIC_NEWS_API_KEY;
 const BASE_URL = process.env.EXPO_PUBLIC_NEWS_LAST_URL;
 
 export const fetchAllArticles = async (
-  category: string[]
+  category: string[],
+  nextPage?: string
 ): Promise<NewsResponse> => {
   try {
     const params = new URLSearchParams({
@@ -13,6 +14,8 @@ export const fetchAllArticles = async (
       language: "pt",
       category: category.join(","),
     });
+
+    if (nextPage) params.append("page", nextPage);
 
     const response = await fetch(`${BASE_URL}?${params.toString()}`);
 
@@ -40,7 +43,6 @@ export const fetchArticlesByQuery = async ({
     params.append("language", language || "pt");
 
     const url = `${BASE_URL}?${params.toString()}`;
-    console.log("URL da requisição:", url);
 
     const response = await fetch(url);
 
@@ -52,13 +54,7 @@ export const fetchArticlesByQuery = async ({
         }`
       );
     }
-
     const data = await response.json();
-    console.log("Resposta da API:", {
-      status: response.status,
-      totalResults: data.totalResults,
-      hasResults: Boolean(data.results?.length),
-    });
 
     return data;
   } catch (error) {

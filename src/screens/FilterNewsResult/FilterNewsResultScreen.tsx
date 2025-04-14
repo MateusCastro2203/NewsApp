@@ -6,8 +6,10 @@ import { useNewsFilterStore } from "@/store/filterStore";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/navigation/AppNavigator";
+import { useHomeScreen } from "@/screens/Home/hooks/useHomeScreen";
 export const FilterNewsResultScreen = () => {
   const { results } = useNewsFilterStore();
+  const { handleEndReached } = useHomeScreen();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -27,6 +29,10 @@ export const FilterNewsResultScreen = () => {
             />
           )}
           keyExtractor={(item) => item.article_id}
+          onEndReached={() => {
+            handleEndReached();
+          }}
+          onEndReachedThreshold={0.5}
         />
       </View>
     </SafeAreaView>

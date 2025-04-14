@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useOfflineStore } from "@/store/offlineStorage";
 import { useNetworkStatus } from "@/hooks/useNetWorkStatus";
 import { NewsResult } from "@/store/types/news.types";
+import { useToast } from "@/hooks/useToast";
 
 interface OfflineButtonProps {
   article: NewsResult;
@@ -16,11 +17,10 @@ export function OfflineButton({ article }: OfflineButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const isAvailableOffline = isArticleOffline(article.article_id);
-
+  const { showToast } = useToast();
   const handlePress = async () => {
     if (!shouldDownload()) {
-      // Adicionar um Toast ou Alert aqui depois
-      console.warn("Conexão limitada. Use WiFi para baixar conteúdo.");
+      showToast("Conexão limitada. Use WiFi para baixar conteúdo.", "error");
       return;
     }
 
@@ -32,7 +32,7 @@ export function OfflineButton({ article }: OfflineButtonProps) {
         await addToOffline(article);
       }
     } catch (error) {
-      console.error("Erro ao gerenciar conteúdo offline:", error);
+      showToast("Erro ao gerenciar conteúdo offline:", "error");
     } finally {
       setIsLoading(false);
     }

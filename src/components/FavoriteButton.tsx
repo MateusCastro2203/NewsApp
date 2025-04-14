@@ -28,7 +28,11 @@ export function FavoriteButton({
   };
 
   return (
-    <TouchableOpacity onPress={toggleFavorite} style={style} className="p-2">
+    <TouchableOpacity
+      onPress={toggleFavorite}
+      style={style}
+      className="p-2 rounded-full bg-gray-100 mb-2"
+    >
       <Ionicons
         name={isFavorited ? "heart-circle" : "heart-circle-outline"}
         size={size}

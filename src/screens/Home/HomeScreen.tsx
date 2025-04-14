@@ -1,40 +1,51 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { View, SafeAreaView, FlatList } from "react-native";
 import { useHomeScreen } from "./hooks/useHomeScreen";
 import { usePreferencesStore } from "@/store";
 import { UseNewsStore } from "@/store/newsStore";
-import { FlatList } from "react-native-gesture-handler";
 import { NewsCard } from "@/components/NewsCard";
 import { SearchNews } from "@/components/SearchNews";
 import { useNavigation } from "@react-navigation/native";
 import { NewsNavigationProp } from "@/navigation/types";
 import { DrawerButton } from "@/components/DrawerButton";
+import { useToast } from "@/hooks/useToast";
+import { LoadingState } from "@/components/LoadingState";
+import { ErrorState } from "@/components/ErrorState";
 
 export const HomeScreen = () => {
   const { category } = usePreferencesStore();
-  const [dataFetched, setDataFetched] = useState(false);
+
   const { results } = UseNewsStore();
+  const {
+    homeScreen,
+    handleEndReached,
+    isLoading,
+    error,
+    handleRefresh,
+    isRefreshing,
+    dataFetched,
+  } = useHomeScreen();
+
   useEffect(() => {
     const fetchData = async () => {
       if (!category || dataFetched) return;
       try {
-        await useHomeScreen(category);
-
-        setDataFetched(true);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        await homeScreen(category);
+      } catch (e) {
+        return <ErrorState message={error} onRetry={() => fetchData()} />;
       }
     };
     fetchData();
   }, [category, dataFetched]);
 
   const navigation = useNavigation<NewsNavigationProp>();
+
+  if (isLoading) {
+    return <LoadingState message="Carregando notícias..." />;
+  }
+
+  if (error) {
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-slate-100">
@@ -55,10 +66,12 @@ export const HomeScreen = () => {
             />
           )}
           keyExtractor={(item) => item.article_id}
-          onScrollBeginDrag={() => {
-            setDataFetched(false);
+          onEndReached={() => {
+            handleEndReached();
           }}
-          refreshing={!dataFetched}
+          onEndReachedThreshold={0.5}
+          onRefresh={handleRefresh}
+          refreshing={isRefreshing}
         />
       </View>
     </SafeAreaView>
