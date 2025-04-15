@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Image, ImageProps, View, ActivityIndicator } from "react-native";
+import {
+  Image,
+  ImageProps,
+  View,
+  ActivityIndicator,
+  Animated,
+} from "react-native";
 
 interface NewsImageProps extends Omit<ImageProps, "source"> {
   imageUrl?: string;
@@ -11,18 +17,35 @@ const DEFAULT_IMAGE = require("@/assets/images/news-placeholder.png");
 export function NewsImage({ imageUrl, className, ...props }: NewsImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const opacity = useState(new Animated.Value(0))[0];
+  const thumbnailUrl = imageUrl?.replace(/\.(jpg|jpeg|png)/, "_thumb.$1");
+  const [isBlurred, setIsBlurred] = useState(true);
+
+  const handleLoadEnd = () => {
+    setIsLoading(false);
+    setIsBlurred(false);
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
 
   return (
     <View className={`relative ${className}`}>
-      <Image
+      <Animated.Image
         source={hasError || !imageUrl ? DEFAULT_IMAGE : { uri: imageUrl }}
         onLoadStart={() => setIsLoading(true)}
-        onLoadEnd={() => setIsLoading(false)}
+        onLoadEnd={handleLoadEnd}
         onError={() => {
           setHasError(true);
           setIsLoading(false);
         }}
         className="w-full h-full"
+        style={{
+          opacity,
+        }}
+        blurRadius={isBlurred ? 5 : 0}
         {...props}
       />
       {isLoading && (
