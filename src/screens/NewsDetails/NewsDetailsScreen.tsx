@@ -71,7 +71,10 @@ export const NewsDetailsScreen = () => {
             {article.description}
           </Text>
           <TouchableOpacity
-            onPress={() => setShowWebView(true)}
+            onPress={() => {
+              console.log("AQUI");
+              setShowWebView(true);
+            }}
             className="bg-blue-500 rounded-md py-3 px-4"
           >
             <Text className="text-white text-center font-semibold">
