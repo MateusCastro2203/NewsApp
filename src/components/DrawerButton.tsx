@@ -8,7 +8,7 @@ export function DrawerButton() {
   const navigation = useNavigation<DrawerNavigationProp<any>>();
 
   return (
-    <View className="items-center flex-row  w-1/12">
+    <View className="items-center flex-row w-1/12">
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
         <Ionicons name="menu" size={24} color="#2563eb" />
       </TouchableOpacity>

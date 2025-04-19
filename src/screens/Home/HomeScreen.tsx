@@ -11,11 +11,14 @@ import { DrawerButton } from "@/components/DrawerButton";
 import { useToast } from "@/hooks/useToast";
 import { LoadingState } from "@/components/LoadingState";
 import { ErrorState } from "@/components/ErrorState";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export const HomeScreen = () => {
   const { category } = usePreferencesStore();
 
   const { results } = UseNewsStore();
+
+  const { theme } = useTheme();
   const {
     homeScreen,
     handleEndReached,
@@ -48,7 +51,11 @@ export const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-100">
+    <SafeAreaView
+      className={`flex-1 ${
+        theme === "dark" ? "bg-dark-background2" : "bg-light-background2"
+      }`}
+    >
       <View className="w-full h-full items-centerr px-4 ">
         <View className="flex-row justify-between py-2">
           <DrawerButton />

@@ -7,12 +7,15 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useHomeScreen } from "@/screens/Home/hooks/useHomeScreen";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export function SearchNews() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { useSearchNews } = useHomeScreen();
   const { handleSearch } = useSearchNews();
+  const { theme } = useTheme();
+
   const onSearch = async () => {
     if (!searchQuery.trim()) return;
 
@@ -29,8 +32,8 @@ export function SearchNews() {
       <TextInput
         value={searchQuery}
         placeholder="Buscar notícias..."
-        className="h-10 border border-gray-300 rounded-lg  px-4  bg-white w-7/12"
-        placeholderTextColor="#9ca3af"
+        className={`h-10 border border-gray-300 rounded-lg px-4 w-7/12 bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary`}
+        placeholderTextColor={theme === "dark" ? "#9ca3af" : "#6b7280"}
         onChangeText={setSearchQuery}
         onSubmitEditing={onSearch}
       />
@@ -40,12 +43,12 @@ export function SearchNews() {
         disabled={isLoading || !searchQuery.trim()}
         className={`h-10 ml-2 py-2 px-4 rounded-lg items-center w-4/12 ${
           isLoading || !searchQuery.trim()
-            ? "bg-blue-300"
-            : "bg-blue-500 active:bg-blue-600"
+            ? "bg-light-secondary/50 dark:bg-dark/50"
+            : "bg-light-primary dark:bg-dark-primary active:bg-light-primary/80 dark:active:bg-dark-primary/80"
         }`}
       >
         {isLoading ? (
-          <ActivityIndicator color="white" />
+          <ActivityIndicator color={theme === "dark" ? "#ffffff" : "#ffffff"} />
         ) : (
           <Text className="text-white font-medium">Buscar</Text>
         )}
