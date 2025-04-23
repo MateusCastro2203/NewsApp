@@ -32,7 +32,11 @@ export function SearchNews() {
       <TextInput
         value={searchQuery}
         placeholder="Buscar notícias..."
-        className={`h-10 border border-gray-300 rounded-lg px-4 w-7/12 bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary`}
+        className={`h-10 border border-gray-300 rounded-lg px-4 w-7/12 ${
+          theme === "dark"
+            ? "bg-dark-background text-dark-text-primary"
+            : "bg-light-background text-light-text-primary"
+        }`}
         placeholderTextColor={theme === "dark" ? "#9ca3af" : "#6b7280"}
         onChangeText={setSearchQuery}
         onSubmitEditing={onSearch}
@@ -43,14 +47,22 @@ export function SearchNews() {
         disabled={isLoading || !searchQuery.trim()}
         className={`h-10 ml-2 py-2 px-4 rounded-lg items-center w-4/12 ${
           isLoading || !searchQuery.trim()
-            ? "bg-light-secondary/50 dark:bg-dark/50"
-            : "bg-light-primary dark:bg-dark-primary active:bg-light-primary/80 dark:active:bg-dark-primary/80"
+            ? theme === "dark"
+              ? "bg-dark-button-secondary"
+              : "bg-light-button-secondary"
+            : theme === "dark"
+            ? "bg-light-button-primary active:bg-light-button-primary/80"
+            : "bg-dark-button-primary  active:bg-dark-button-primary/80"
         }`}
       >
         {isLoading ? (
-          <ActivityIndicator color={theme === "dark" ? "#ffffff" : "#ffffff"} />
+          <ActivityIndicator
+            color={theme === "dark" ? "#ffffff" : "bg-light-text-primary"}
+          />
         ) : (
-          <Text className="text-white font-medium">Buscar</Text>
+          <Text className={` ${"text-dark-text-primary"} font-medium`}>
+            Buscar
+          </Text>
         )}
       </TouchableOpacity>
     </View>

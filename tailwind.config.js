@@ -17,6 +17,11 @@ module.exports = {
             tertiary: "#757575",
           },
           border: "#e8eaed",
+          button: {
+            primary: "#007bff",
+            secondary: "#6c757d",
+            tertiary: "#f8f9fa",
+          },
         },
         // Cores do tema escuro
         dark: {
@@ -29,6 +34,11 @@ module.exports = {
             tertiary: "#9aa0a6",
           },
           border: "#2c2c2c",
+          button: {
+            primary: "#007bff",
+            secondary: "#6c757d",
+            tertiary: "#f8f9fa",
+          },
         },
       },
     },

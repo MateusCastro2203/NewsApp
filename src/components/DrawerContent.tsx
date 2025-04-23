@@ -33,45 +33,61 @@ export function DrawerContent(props: DrawerContentComponentProps) {
   ];
 
   return (
-    <DrawerContentScrollView {...props}>
-      <View className="flex-1 bg-white dark:bg-gray-800">
+    <DrawerContentScrollView
+      {...props}
+      className={theme === "dark" ? "bg-gray-900" : "bg-white"}
+    >
+      <View className="flex-1">
         <View className="p-4">
-          <Text className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-            News App
-          </Text>
-
           {menuItems.map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={item.onPress}
-              className="flex-row items-center py-3 px-4"
+              className={`flex-row items-center py-3 px-4 rounded-lg mb-1 ${
+                theme === "dark" ? "hover:bg-gray-800" : "hover:bg-gray-100"
+              }`}
             >
               <Ionicons
                 name={item.icon as any}
                 size={24}
-                className="text-gray-600 dark:text-gray-300 mr-3"
+                color={theme === "dark" ? "#e5e7eb" : "#4b5563"}
+                style={{ marginRight: 12 }}
               />
-              <Text className="text-gray-800 dark:text-white text-base">
+              <Text
+                className={`text-base ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-800"
+                }`}
+              >
                 {item.label}
               </Text>
             </TouchableOpacity>
           ))}
-        </View>
-
-        <View className="mt-auto border-t border-gray-200 dark:border-gray-700">
-          <TouchableOpacity
-            onPress={toggleTheme}
-            className="flex-row items-center py-3 px-4"
+          <View
+            className={`mt-auto border-t ${
+              theme === "dark" ? "border-gray-700" : "border-gray-200"
+            }`}
           >
-            <Ionicons
-              name={theme === "light" ? "moon" : "sunny"}
-              size={24}
-              className="text-gray-600 dark:text-gray-300 mr-3"
-            />
-            <Text className="text-gray-800 dark:text-white text-base">
-              {theme === "light" ? "Modo Escuro" : "Modo Claro"}
-            </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={toggleTheme}
+              className={`flex-row items-center py-3 px-4 ${
+                theme === "dark" ? "hover:bg-gray-800" : "hover:bg-gray-100"
+              }`}
+            >
+              <Ionicons
+                name={theme === "light" ? "moon" : "sunny"}
+                size={24}
+                color={theme === "dark" ? "#e5e7eb" : "#4b5563"}
+                style={{ marginRight: 12 }}
+              />
+              <Text
+                className={`text-base ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-800"
+                }`}
+              >
+                {theme === "light" ? "Modo Escuro" : "Modo Claro"}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </DrawerContentScrollView>
