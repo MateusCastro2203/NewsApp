@@ -12,19 +12,19 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.flaviogimenez.newsApp"
+      "bundleIdentifier": "com.flaviogimenez.newsApp",
+      "jsEngine": "jsc"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.flaviogimenez.newsApp"
+      "package": "com.flaviogimenez.newsApp",
+      "jsEngine": "jsc"
     },
     "web": {
       "favicon": "./assets/favicon.png",
