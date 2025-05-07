@@ -18,9 +18,10 @@ export function NewsImage({ imageUrl, className, ...props }: NewsImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const opacity = useState(new Animated.Value(0))[0];
-  const thumbnailUrl = imageUrl?.replace(/\.(jpg|jpeg|png)/, "_thumb.$1");
   const [isBlurred, setIsBlurred] = useState(true);
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
 
+  
   const handleLoadEnd = () => {
     setIsLoading(false);
     setIsBlurred(false);

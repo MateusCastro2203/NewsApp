@@ -10,6 +10,7 @@ import "./global.css";
 import { initializeStorage } from "@/services/useOfflineStorage";
 import { useToast } from "@/hooks/useToast";
 import { Toast } from "@/components/Toast";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export default function App() {
   const isFirstTime = useOnboardingStore((state) => state.isFirstTime);
@@ -18,14 +19,16 @@ export default function App() {
   }, []);
   const { isVisible, message, type, hideToast } = useToast();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <StatusBar style="dark" />
-        {isFirstTime ? <OnboardingScreen /> : <AppNavigator />}
-        {isVisible && (
-          <Toast message={message} type={type} onHide={hideToast} />
-        )}
-      </NavigationContainer>
-    </SafeAreaView>
+    <ThemeProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <StatusBar style="dark" />
+          {isFirstTime ? <OnboardingScreen /> : <AppNavigator />}
+          {isVisible && (
+            <Toast message={message} type={type} onHide={hideToast} />
+          )}
+        </NavigationContainer>
+      </SafeAreaView>
+    </ThemeProvider>
   );
 }

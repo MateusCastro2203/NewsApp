@@ -7,12 +7,15 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useHomeScreen } from "@/screens/Home/hooks/useHomeScreen";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export function SearchNews() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { useSearchNews } = useHomeScreen();
   const { handleSearch } = useSearchNews();
+  const { theme } = useTheme();
+
   const onSearch = async () => {
     if (!searchQuery.trim()) return;
 
@@ -29,8 +32,12 @@ export function SearchNews() {
       <TextInput
         value={searchQuery}
         placeholder="Buscar notícias..."
-        className="h-10 border border-gray-300 rounded-lg  px-4  bg-white w-7/12"
-        placeholderTextColor="#9ca3af"
+        className={`h-10 border border-gray-300 rounded-lg px-4 w-7/12 ${
+          theme === "dark"
+            ? "bg-dark-background text-dark-text-primary"
+            : "bg-light-background text-light-text-primary"
+        }`}
+        placeholderTextColor={theme === "dark" ? "#9ca3af" : "#6b7280"}
         onChangeText={setSearchQuery}
         onSubmitEditing={onSearch}
       />
@@ -40,14 +47,22 @@ export function SearchNews() {
         disabled={isLoading || !searchQuery.trim()}
         className={`h-10 ml-2 py-2 px-4 rounded-lg items-center w-4/12 ${
           isLoading || !searchQuery.trim()
-            ? "bg-blue-300"
-            : "bg-blue-500 active:bg-blue-600"
+            ? theme === "dark"
+              ? "bg-dark-button-secondary"
+              : "bg-light-button-secondary"
+            : theme === "dark"
+            ? "bg-light-button-primary active:bg-light-button-primary/80"
+            : "bg-dark-button-primary  active:bg-dark-button-primary/80"
         }`}
       >
         {isLoading ? (
-          <ActivityIndicator color="white" />
+          <ActivityIndicator
+            color={theme === "dark" ? "#ffffff" : "bg-light-text-primary"}
+          />
         ) : (
-          <Text className="text-white font-medium">Buscar</Text>
+          <Text className={` ${"text-dark-text-primary"} font-medium`}>
+            Buscar
+          </Text>
         )}
       </TouchableOpacity>
     </View>

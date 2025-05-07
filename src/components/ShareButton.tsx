@@ -24,7 +24,7 @@ export function ShareButton({ article }: ShareButtonProps) {
   return (
     <TouchableOpacity
       onPress={handleShare}
-      className="p-2 rounded-full bg-gray-100"
+      className="p-2 rounded-full bg-gray-100 mb-2"
     >
       <Ionicons name="share-outline" size={24} color="#6b7280" />
     </TouchableOpacity>

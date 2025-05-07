@@ -42,7 +42,7 @@ export function OfflineButton({ article }: OfflineButtonProps) {
     <TouchableOpacity
       onPress={handlePress}
       disabled={isLoading}
-      className="p-2 rounded-full bg-gray-100"
+      className="p-2 rounded-full bg-gray-100 mb-2"
     >
       {isLoading ? (
         <ActivityIndicator size="small" color="#0000ff" />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useOfflineStore } from "@/store/offlineStorage";
@@ -25,6 +25,15 @@ export function OfflineContentScreen() {
   const { articles } = useOfflineStore();
   const { isConnected } = useNetworkStatus();
   const navigation = useNavigation<OfflineScreenNavigationProp>();
+  const isOffline = useMemo(() => {
+    return (
+      <View className="bg-yellow-100 p-4">
+        <Text className="text-yellow-800">
+          Você está offline. Apenas conteúdo baixado está disponível.
+        </Text>
+      </View>
+    );
+  }, [isConnected]);
 
   if (articles.length === 0) {
     return (
@@ -50,26 +59,14 @@ export function OfflineContentScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-100">
-      {!isConnected && (
-        <View className="bg-yellow-100 p-4">
-          <Text className="text-yellow-800">
-            Você está offline. Apenas conteúdo baixado está disponível.
-          </Text>
-        </View>
-      )}
-
-      <View className="flex-1 px-4">
-        <Text className="text-lg font-bold my-4">
-          Notícias Disponíveis Offline ({articles.length})
-        </Text>
-        <FlatList
-          data={articles}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.article_id}
-          contentContainerStyle={{ paddingVertical: 16 }}
-        />
-      </View>
-    </SafeAreaView>
+    <View className="py-4 px-4">
+      {!isConnected && isOffline}
+      <FlatList
+        data={articles}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.article_id}
+        contentContainerStyle={{ paddingVertical: 16 }}
+      />
+    </View>
   );
 }

@@ -8,7 +8,8 @@ import { NewsResult } from "@/store/types/news.types";
 import { FavoritesScreen } from "@/screens/FavoritesNews/FavoritesScreen";
 import { FilterNewsResultScreen } from "@/screens/FilterNewsResult/FilterNewsResultScreen";
 import { OfflineContentScreen } from "@/screens/OfflineContent/OfflineContentScreen";
-import { Ionicons } from "@expo/vector-icons";
+import { DrawerContent } from "@/components/DrawerContent";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // Tipos para a navegação
 export type RootStackParamList = {
@@ -28,15 +29,23 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
 function DrawerNavigator() {
+  const { theme } = useTheme();
+
   return (
     <Drawer.Navigator
       initialRouteName="Home"
+      drawerContent={DrawerContent}
       screenOptions={{
         headerShown: true,
         drawerType: "front",
         drawerStyle: {
           width: "75%",
+          backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
         },
+        headerStyle: {
+          backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+        },
+        headerTintColor: theme === "dark" ? "#ffffff" : "#000000",
       }}
     >
       <Drawer.Screen
@@ -44,7 +53,6 @@ function DrawerNavigator() {
         component={HomeScreen}
         options={{
           title: "News App",
-          drawerLabel: "Notícias",
           headerShown: false,
         }}
       />
@@ -53,7 +61,6 @@ function DrawerNavigator() {
         component={FilterNewsResultScreen}
         options={{
           title: "Resultados da Pesquisa",
-          drawerLabel: "Resultados da Pesquisa",
           headerTransparent: false,
         }}
       />
@@ -62,7 +69,6 @@ function DrawerNavigator() {
         component={FavoritesScreen}
         options={{
           title: "Favoritos",
-          drawerLabel: "Favoritos",
         }}
       />
       <Drawer.Screen
@@ -70,7 +76,6 @@ function DrawerNavigator() {
         component={PreferencesComponent}
         options={{
           title: "Configurações",
-          drawerLabel: "Configurações",
         }}
       />
       <Drawer.Screen
@@ -78,10 +83,6 @@ function DrawerNavigator() {
         component={OfflineContentScreen}
         options={{
           title: "Notícias Baixadas",
-          drawerLabel: "Notícias Baixadas",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="cloud-offline" size={size} color={color} />
-          ),
         }}
       />
     </Drawer.Navigator>
@@ -89,8 +90,17 @@ function DrawerNavigator() {
 }
 
 export const AppNavigator = () => {
+  const { theme } = useTheme();
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+        },
+        headerTintColor: theme === "dark" ? "#ffffff" : "#000000",
+      }}
+    >
       <Stack.Screen
         name="Voltar"
         component={DrawerNavigator}
