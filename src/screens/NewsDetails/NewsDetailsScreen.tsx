@@ -14,6 +14,7 @@ import WebView from "react-native-webview";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { ShareButton } from "@/components/ShareButton";
 import { useTheme } from "@/contexts/ThemeContext";
+import { OfflineButton } from "@/components/OfflineButton";
 
 type NewsDetailsRouteProp = RouteProp<RootStackParamList, "NewsDetails">;
 
@@ -73,9 +74,10 @@ export const NewsDetailsScreen = () => {
           >
             {article.title}
           </Text>
-          <View className="flex-row justify-between w-3/12">
+          <View className="flex-row justify-between w-4/12">
             <FavoriteButton article={article} />
             <ShareButton article={article} />
+            <OfflineButton article={article} />
           </View>
           <View className="flex-row items-center justify-between mb-4">
             <Text

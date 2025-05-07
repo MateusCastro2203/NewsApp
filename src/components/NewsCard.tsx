@@ -37,7 +37,6 @@ export const NewsCard = ({
       {showFavoriteButton && (
         <View className="absolute top-2 right-2">
           <FavoriteButton article={item} />
-          <OfflineButton article={item} />
         </View>
       )}
 
