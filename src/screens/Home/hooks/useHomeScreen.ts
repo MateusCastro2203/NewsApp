@@ -46,7 +46,6 @@ export const useHomeScreen = () => {
   };
 
   const handleEndReached = async () => {
-    console.log("handleEndReached", newsStore.nextPage);
     if (newsStore.nextPage === null) return;
     if (isLoadingNextPage) return;
     try {
@@ -75,7 +74,6 @@ export const useHomeScreen = () => {
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    console.log("onRefresh");
     try {
       await homeScreen(category);
       setDataFetched(false); // Reseta o dataFetched para permitir nova carga
@@ -102,7 +100,6 @@ export const useHomeScreen = () => {
             ...filters,
             searchQuery: query,
           });
-          console.log("response", response.results);
           if (response && response.results) {
             newsStore.setResults(response.results);
             newsStore.setStatus("success");

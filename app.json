@@ -12,12 +12,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.flaviogimenez.newsApp"
+      "bundleIdentifier": "com.mateuscastro.newsApp"
     },
     "android": {
       "adaptiveIcon": {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import { ShareButton } from "@/components/ShareButton";
 import { useTheme } from "@/contexts/ThemeContext";
 import { OfflineButton } from "@/components/OfflineButton";
+import { ChatBot } from "@/components/ChatBot/ChatBot";
 
 type NewsDetailsRouteProp = RouteProp<RootStackParamList, "NewsDetails">;
 
@@ -25,15 +26,46 @@ export const NewsDetailsScreen = () => {
 
   const [showWebView, setShowWebView] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showChat, setShowChat] = useState(false);
+  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   const handleWebViewPress = () => {
-    console.log("Botão pressionado");
-    console.log("URL do artigo:", article.link);
     setShowWebView(true);
   };
 
+  const toggleChat = () => {
+    setShowChat(!showChat);
+    setIsFirstMessage(true);
+  };
+  const handleSetIsFirstMessage = useCallback((value: boolean) => {
+    setIsFirstMessage(value);
+  }, []);
+
+  if (showChat) {
+    return (
+      <View className="flex-1">
+        <ChatBot
+          articleTitle={article.title}
+          articleContent={article.content || article.description}
+          articleLink={article.link}
+          isFirstMessage={isFirstMessage}
+          setIsFirstMessage={setIsFirstMessage}
+        />
+        <TouchableOpacity
+          onPress={toggleChat}
+          className={`absolute bottom-20 right-5 p-3 rounded-full ${
+            theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+          }`}
+        >
+          <Text className={theme === "dark" ? "text-white" : "text-gray-800"}>
+            Voltar
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   if (showWebView) {
-    console.log("Mostrando WebView");
     return (
       <View className="flex-1">
         {loading && (
@@ -104,6 +136,16 @@ export const NewsDetailsScreen = () => {
           >
             {article.description}
           </Text>
+          <TouchableOpacity
+            onPress={toggleChat}
+            className={`mt-4 rounded-md py-3 px-4 mb-4 ${
+              theme === "dark" ? "bg-green-600" : "bg-green-500"
+            }`}
+          >
+            <Text className="text-white text-center font-semibold">
+              Perguntar ao Scooby sobre esta notícia
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={handleWebViewPress}
             className={`rounded-md py-3 px-4 ${

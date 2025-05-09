@@ -10,10 +10,10 @@ export interface FilterState {
   toDate?: string | null;
   domains?: string[];
 
-  setSearchQuery: (query: string) => void;
-  setLanguage: (lang: string) => void;
-  setSortBy: (sort: "relevancy" | "popularity" | "publishedAt") => void;
-  setDateRange: (from: string | null, to: string | null) => void;
-  setDomains: (domains: string[]) => void;
-  resetFilters: () => void;
+  setSearchQuery?: (query: string) => void;
+  setLanguage?: (lang: string) => void;
+  setSortBy?: (sort: "relevancy" | "popularity" | "publishedAt") => void;
+  setDateRange?: (from: string | null, to: string | null) => void;
+  setDomains?: (domains: string[]) => void;
+  resetFilters?: () => void;
 }

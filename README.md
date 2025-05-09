@@ -65,6 +65,9 @@ npm install
 
 3. Crie um development build:
 
+EXPO_PUBLIC_NEWS_API_KEY=sua_chave_api
+EXPO_PUBLIC_NEWS_LAST_URL=url_da_api_de_noticias
+
 ```bash
 npx expo prebuild
 ```
@@ -81,14 +84,20 @@ npx expo run:android
 
 ## 📄 Estrutura do Projeto
 
+```
 src/
-├── components/ # Componentes reutilizáveis
-├── screens/ # Telas do aplicativo
-├── services/ # Serviços e APIs
-├── store/ # Gerenciamento de estado
-├── hooks/ # Hooks customizados
-├── navigation/ # Configuração de navegação
-└── types/ # Definições de tipos
+├── components/       # Componentes reutilizáveis
+│   ├── ChatBot/      # Componentes do assistente IA
+│   └── ...           # Outros componentes
+├── screens/          # Telas do aplicativo
+├── services/         # Serviços e APIs
+├── store/            # Gerenciamento de estado
+├── hooks/            # Hooks customizados
+├── navigation/       # Configuração de navegação
+├── contexts/         # Contextos da aplicação (ThemeContext, etc)
+├── types/            # Definições de tipos
+└── utils/            # Utilitários e helpers
+```
 
 ## 🔄 Estado do Projeto
 

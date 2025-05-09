@@ -29,7 +29,6 @@ export async function downloadImage(
       discretionary: true,
       progress: (response) => {
         const progress = (response.bytesWritten / response.contentLength) * 100;
-        console.log(`Download progress: ${progress.toFixed(2)}%`);
       },
     }).promise;
 
