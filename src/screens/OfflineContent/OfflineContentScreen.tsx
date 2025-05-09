@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useOfflineStore } from "@/store/offlineStorage";
 import { NewsCard } from "@/components/NewsCard";
@@ -13,9 +13,11 @@ import {
   RootDrawerParamList,
   RootStackParamList,
 } from "@/navigation/AppNavigator";
-import { NewsResult } from "@/store/types/news.types";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useTheme } from "@/contexts/ThemeContext";
+import { createStyles } from "./styles";
+import { OfflineArticle } from "@/store/types/offiline.types";
+import { NewsResult } from "@/store/types/news.types";
 
 type OfflineScreenNavigationProp = CompositeNavigationProp<
   DrawerNavigationProp<RootDrawerParamList, "OfflineContent">,
@@ -28,38 +30,7 @@ export function OfflineContentScreen() {
   const navigation = useNavigation<OfflineScreenNavigationProp>();
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: isDarkTheme ? "#111827" : "#f1f5f9",
-    },
-    content: {
-      paddingVertical: 16,
-      paddingHorizontal: 16,
-    },
-    emptyContainer: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 16,
-    },
-    emptyText: {
-      fontSize: 18,
-      color: isDarkTheme ? "#d1d5db" : "#4b5563",
-      textAlign: "center",
-    },
-    offlineAlert: {
-      backgroundColor: "#fef3c7",
-      padding: 16,
-    },
-    offlineText: {
-      color: "#92400e",
-    },
-    listContent: {
-      paddingVertical: 16,
-    },
-  });
+  const styles = createStyles(isDarkTheme);
 
   const isOffline = useMemo(() => {
     return (
@@ -84,12 +55,14 @@ export function OfflineContentScreen() {
     );
   }
 
-  const renderItem = ({ item }: { item: NewsResult }) => (
+  const renderItem = ({ item }: { item: OfflineArticle }) => (
     <NewsCard
       item={item}
       showFavoriteButton={true}
       handlePress={() => {
-        navigation.navigate("NewsDetails", { article: item });
+        navigation.navigate("NewsDetails", {
+          article: item as unknown as NewsResult,
+        });
       }}
     />
   );

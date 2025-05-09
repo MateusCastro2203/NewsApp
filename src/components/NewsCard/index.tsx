@@ -9,9 +9,13 @@ import { NewsImage } from "@/components/NewsImage";
 import { OfflineButton } from "@/components/OfflineButton";
 import { useTheme } from "@/contexts/ThemeContext";
 import { createStyles } from "./styles";
+import { OfflineArticle } from "@/store/types/offiline.types";
+
+// Tipo que pode ser tanto NewsResult quanto OfflineArticle
+type NewsItem = NewsResult | OfflineArticle;
 
 interface NewsCardProps {
-  item: NewsResult;
+  item: NewsItem;
   showFavoriteButton?: boolean;
   handlePress?: () => void;
 }
@@ -34,7 +38,7 @@ export const NewsCard = ({
       />
       {showFavoriteButton && (
         <View style={styles.buttonsContainer}>
-          <FavoriteButton article={item} />
+          <FavoriteButton article={item as NewsResult} />
         </View>
       )}
 

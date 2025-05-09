@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Text,
   Modal,
-  StyleSheet,
 } from "react-native";
 import { useHomeScreen } from "./hooks/useHomeScreen";
 import { usePreferencesStore } from "@/store";
@@ -21,6 +20,7 @@ import { LoadingState } from "@/components/LoadingState";
 import { ErrorState } from "@/components/ErrorState";
 import { useTheme } from "@/contexts/ThemeContext";
 import { ChatBot } from "@/components/ChatBot";
+import { createStyles } from "./styles";
 
 export const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +32,7 @@ export const HomeScreen = () => {
 
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
+  const styles = createStyles(isDarkTheme);
 
   const {
     homeScreen,
@@ -69,75 +70,6 @@ export const HomeScreen = () => {
     setModalVisible(false);
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: isDarkTheme ? "#1e1e1e" : "#f1f5f9",
-    },
-    content: {
-      width: "100%",
-      height: "100%",
-      alignItems: "center",
-      paddingHorizontal: 16,
-      opacity: modalVisible ? 0.7 : 1,
-      backgroundColor: modalVisible ? "black" : "transparent",
-    },
-    header: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      paddingVertical: 8,
-    },
-    modalContainer: {
-      flex: 1,
-    },
-    modalContent: {
-      flex: 1,
-      margin: 12,
-      borderRadius: 12,
-      overflow: "hidden",
-      backgroundColor: isDarkTheme ? "#1f2937" : "#ffffff",
-    },
-    modalHeader: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: isDarkTheme ? "#374151" : "#e5e7eb",
-    },
-    modalTitle: {
-      fontSize: 20,
-      fontWeight: "bold",
-      color: isDarkTheme ? "#ffffff" : "#1f2937",
-    },
-    closeButton: {
-      fontSize: 18,
-      color: isDarkTheme ? "#d1d5db" : "#4b5563",
-    },
-    chatButton: {
-      padding: 8,
-      borderRadius: 9999,
-      width: 80,
-      height: 80,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: isDarkTheme ? "#1d4ed8" : "#3b82f6",
-    },
-    chatButtonText: {
-      color: "#ffffff",
-      fontSize: 20,
-      fontWeight: "bold",
-    },
-    chatButtonContainer: {
-      flexDirection: "row",
-      justifyContent: "flex-end",
-      alignItems: "center",
-      position: "absolute",
-      bottom: 20,
-      right: 20,
-    },
-  });
-
   const renderModal = () => {
     if (!modalVisible) return null;
 
@@ -165,7 +97,7 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <View style={[styles.content, modalVisible && styles.contentDimmed]}>
         <View style={styles.header}>
           <DrawerButton />
           <SearchNews />

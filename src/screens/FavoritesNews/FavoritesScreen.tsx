@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Text, StyleSheet } from "react-native";
+import { View, FlatList, Text } from "react-native";
 import { useFavoriteStore } from "@/store/favoriteStore";
 import { NewsCard } from "@/components/NewsCard";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +14,7 @@ import {
 } from "@/navigation/AppNavigator";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useTheme } from "@/contexts/ThemeContext";
+import { createStyles } from "./styles";
 
 type FavoritesNavigationProp = CompositeNavigationProp<
   DrawerNavigationProp<RootDrawerParamList, "Favorites">,
@@ -25,37 +26,7 @@ export function FavoritesScreen() {
   const navigation = useNavigation<FavoritesNavigationProp>();
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: isDarkTheme ? "#111827" : "#f1f5f9",
-    },
-    emptyContainer: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 16,
-    },
-    emptyText: {
-      fontSize: 18,
-      textAlign: "center",
-      color: isDarkTheme ? "#d1d5db" : "#4b5563",
-    },
-    contentContainer: {
-      flex: 1,
-      paddingHorizontal: 16,
-    },
-    title: {
-      fontSize: 20,
-      fontWeight: "bold",
-      marginVertical: 16,
-      color: isDarkTheme ? "#ffffff" : "#1f2937",
-    },
-    listContent: {
-      paddingVertical: 16,
-    },
-  });
+  const styles = createStyles(isDarkTheme);
 
   if (savedNews.length === 0) {
     return (
