@@ -46,7 +46,7 @@ Um aplicativo de notícias moderno desenvolvido com React Native e Expo, oferece
 
 ## 🎬 Demo
 
-[![NewsApp Demo](https://youtube.com/shorts/xanYXrtRxhA?feature=share)]
+[![NewsApp Demo](https://www.youtube.com/shorts/xanYXrtRxhA)]
 
 _Demonstração das principais funcionalidades do NewsApp, incluindo navegação, ChatBot com IA e modo offline._
 
