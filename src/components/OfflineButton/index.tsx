@@ -5,6 +5,7 @@ import { useOfflineStore } from "@/store/offlineStorage";
 import { useNetworkStatus } from "@/hooks/useNetWorkStatus";
 import { NewsResult } from "@/store/types/news.types";
 import { useToast } from "@/hooks/useToast";
+import { createStyles } from "./styles";
 
 interface OfflineButtonProps {
   article: NewsResult;
@@ -17,7 +18,9 @@ export function OfflineButton({ article }: OfflineButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const isAvailableOffline = isArticleOffline(article.article_id);
+  const styles = createStyles({ isAvailableOffline });
   const { showToast } = useToast();
+
   const handlePress = async () => {
     if (!shouldDownload()) {
       showToast("Conexão limitada. Use WiFi para baixar conteúdo.", "error");
@@ -42,7 +45,7 @@ export function OfflineButton({ article }: OfflineButtonProps) {
     <TouchableOpacity
       onPress={handlePress}
       disabled={isLoading}
-      className="p-2 rounded-full bg-gray-100 mb-2"
+      style={styles.button}
     >
       {isLoading ? (
         <ActivityIndicator size="small" color="#0000ff" />
@@ -50,7 +53,7 @@ export function OfflineButton({ article }: OfflineButtonProps) {
         <Ionicons
           name={isAvailableOffline ? "cloud-done" : "cloud-download"}
           size={24}
-          color={isAvailableOffline ? "#22c55e" : "#6b7280"}
+          style={styles.icon}
         />
       )}
     </TouchableOpacity>

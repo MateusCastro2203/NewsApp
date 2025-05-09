@@ -2,22 +2,22 @@ import React from "react";
 import { TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/contexts/ThemeContext";
+import { createStyles } from "./styles";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const isDarkTheme = theme === "dark";
+  const styles = createStyles({ isDarkTheme });
 
   return (
-    <TouchableOpacity
-      onPress={toggleTheme}
-      className="flex-row items-center px-4 py-3"
-    >
+    <TouchableOpacity onPress={toggleTheme} style={styles.container}>
       <Ionicons
-        name={theme === "light" ? "sunny" : "moon"}
+        name={isDarkTheme ? "moon" : "sunny"}
         size={24}
-        className="text-gray-800 dark:text-white mr-3"
+        style={styles.icon}
       />
-      <Text className="text-gray-800 dark:text-white text-base">
-        {theme === "light" ? "Modo Escuro" : "Modo Claro"}
+      <Text style={styles.text}>
+        {isDarkTheme ? "Modo Claro" : "Modo Escuro"}
       </Text>
     </TouchableOpacity>
   );

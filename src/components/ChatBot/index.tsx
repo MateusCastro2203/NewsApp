@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useFilterStore, useNewsFilterStore } from "@/store/filterStore";
 import { NewsNavigationProp } from "@/navigation/types";
 import { fetchArticlesByQuery } from "@/services/api";
+import { createStyles } from "./styles";
 
 interface CustomChatBotProps {
   articleTitle: string;
@@ -39,6 +40,8 @@ export const ChatBot = ({
   closeModal,
 }: CustomChatBotProps) => {
   const navigation = useNavigation<NewsNavigationProp>();
+  const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
 
   const { setSearchQuery } = useFilterStore();
   const { setResults, setTotalResults, setNextPage, setStatus } =
@@ -51,8 +54,9 @@ export const ChatBot = ({
   const { getConversationId, conversationId, setConversationId } =
     useChatBotStore();
   const flatListRef = useRef<FlatList>(null);
-  const { theme } = useTheme();
   const { user } = useUserStore();
+
+  const styles = createStyles({ isDarkTheme, isLoading });
 
   useEffect(() => {
     flatListRef.current?.scrollToEnd({ animated: true });
@@ -202,22 +206,16 @@ export const ChatBot = ({
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className={`flex-1 ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}
+      style={styles.container}
     >
-      <View className="flex-1 p-4">
-        <Text
-          className={`text-lg font-bold mb-4 ${
-            theme === "dark" ? "text-white" : "text-gray-800"
-          }`}
-        >
-          {articleTitle}
-        </Text>
+      <View style={styles.contentContainer}>
+        <Text style={styles.articleTitle}>{articleTitle}</Text>
 
         <FlatList
           ref={flatListRef}
           data={messages}
           keyExtractor={(item) => item.id}
-          className="flex-1 mb-4"
+          style={styles.flatListContainer}
           renderItem={({ item }) => (
             <Messages
               text={item.text}
@@ -229,36 +227,24 @@ export const ChatBot = ({
           ListFooterComponent={() => (isIATyping ? <TypingIndicator /> : null)}
         />
 
-        <View className="flex-row items-center">
+        <View style={styles.inputContainer}>
           <TextInput
-            className={`flex-1 border rounded-l-full py-2 px-4 ${
-              theme === "dark"
-                ? "bg-gray-700 border-gray-600 text-white"
-                : "bg-gray-100 border-gray-300 text-gray-800"
-            }`}
+            style={styles.textInput}
             value={input}
             onChangeText={setInput}
             placeholder="Digite sua pergunta..."
-            placeholderTextColor={theme === "dark" ? "#9ca3af" : "#6b7280"}
+            placeholderTextColor={isDarkTheme ? "#9ca3af" : "#6b7280"}
             onSubmitEditing={handleSend}
           />
           <TouchableOpacity
             onPress={handleSend}
             disabled={isLoading}
-            className={`p-3 rounded-r-full ${
-              theme === "dark"
-                ? isLoading
-                  ? "bg-blue-800"
-                  : "bg-blue-600"
-                : isLoading
-                ? "bg-blue-700"
-                : "bg-blue-500"
-            }`}
+            style={styles.sendButton}
           >
             {isLoading ? (
-              <ActivityIndicator size="small" color="white" />
+              <ActivityIndicator size="small" color="#ffffff" />
             ) : (
-              <Ionicons name="send" size={20} color="white" />
+              <Ionicons name="send" size={20} color="#ffffff" />
             )}
           </TouchableOpacity>
         </View>

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Modal,
+  StyleSheet,
 } from "react-native";
 import { useHomeScreen } from "./hooks/useHomeScreen";
 import { usePreferencesStore } from "@/store";
@@ -19,7 +20,7 @@ import { useToast } from "@/hooks/useToast";
 import { LoadingState } from "@/components/LoadingState";
 import { ErrorState } from "@/components/ErrorState";
 import { useTheme } from "@/contexts/ThemeContext";
-import { ChatBot } from "@/components/ChatBot/ChatBot";
+import { ChatBot } from "@/components/ChatBot";
 
 export const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,6 +31,8 @@ export const HomeScreen = () => {
   const { results } = UseNewsStore();
 
   const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
+
   const {
     homeScreen,
     handleEndReached,
@@ -66,38 +69,85 @@ export const HomeScreen = () => {
     setModalVisible(false);
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: isDarkTheme ? "#1e1e1e" : "#f1f5f9",
+    },
+    content: {
+      width: "100%",
+      height: "100%",
+      alignItems: "center",
+      paddingHorizontal: 16,
+      opacity: modalVisible ? 0.7 : 1,
+      backgroundColor: modalVisible ? "black" : "transparent",
+    },
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 8,
+    },
+    modalContainer: {
+      flex: 1,
+    },
+    modalContent: {
+      flex: 1,
+      margin: 12,
+      borderRadius: 12,
+      overflow: "hidden",
+      backgroundColor: isDarkTheme ? "#1f2937" : "#ffffff",
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: isDarkTheme ? "#374151" : "#e5e7eb",
+    },
+    modalTitle: {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: isDarkTheme ? "#ffffff" : "#1f2937",
+    },
+    closeButton: {
+      fontSize: 18,
+      color: isDarkTheme ? "#d1d5db" : "#4b5563",
+    },
+    chatButton: {
+      padding: 8,
+      borderRadius: 9999,
+      width: 80,
+      height: 80,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: isDarkTheme ? "#1d4ed8" : "#3b82f6",
+    },
+    chatButtonText: {
+      color: "#ffffff",
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+    chatButtonContainer: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      position: "absolute",
+      bottom: 20,
+      right: 20,
+    },
+  });
+
   const renderModal = () => {
     if (!modalVisible) return null;
 
     return (
-      <SafeAreaView className="flex-1">
-        <View
-          className={`flex-1 m-3 rounded-xl overflow-hidden ${
-            theme === "dark" ? "bg-gray-800" : "bg-white"
-          }
-          
-          `}
-        >
-          <View
-            className={`flex-row justify-between items-center p-4 border-b ${
-              theme === "dark" ? "border-gray-700" : "border-gray-200"
-            }`}
-          >
-            <Text
-              className={`text-xl font-bold ${
-                theme === "dark" ? "text-white" : "text-gray-900"
-              }`}
-            >
-              ChatBot
-            </Text>
+      <SafeAreaView style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>ChatBot</Text>
             <TouchableOpacity onPress={closeModal}>
-              <Text
-                className={`text-lg ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
-                Fechar
-              </Text>
+              <Text style={styles.closeButton}>Fechar</Text>
             </TouchableOpacity>
           </View>
           <ChatBot
@@ -114,17 +164,9 @@ export const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView
-      className={`flex-1 ${
-        theme === "dark" ? "bg-dark-background2" : "bg-light-background2"
-      }`}
-    >
-      <View
-        className={`w-full h-full items-center px-4 ${
-          modalVisible ? "opacity-70 bg-black" : "opacity-100"
-        }`}
-      >
-        <View className="flex-row justify-between py-2">
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.header}>
           <DrawerButton />
           <SearchNews />
         </View>
@@ -156,15 +198,13 @@ export const HomeScreen = () => {
           {renderModal()}
         </Modal>
 
-        <View className="flex-row justify-end items-center absolute bottom-5 right-5">
+        <View style={styles.chatButtonContainer}>
           <TouchableOpacity
-            className={`p-2 rounded-full w-20 h-20 items-center justify-center ${
-              theme === "dark" ? "bg-blue-700" : "bg-blue-500"
-            }`}
+            style={styles.chatButton}
             onPress={handleChatPress}
             activeOpacity={0.7}
           >
-            <Text className="text-white text-xl font-bold">Chat</Text>
+            <Text style={styles.chatButtonText}>Chat</Text>
           </TouchableOpacity>
         </View>
       </View>

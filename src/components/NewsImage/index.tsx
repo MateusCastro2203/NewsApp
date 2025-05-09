@@ -5,23 +5,24 @@ import {
   View,
   ActivityIndicator,
   Animated,
+  StyleProp,
+  ImageStyle,
 } from "react-native";
+import { styles } from "./styles";
 
 interface NewsImageProps extends Omit<ImageProps, "source"> {
   imageUrl?: string;
-  className?: string;
+  style?: StyleProp<ImageStyle>;
 }
 
 const DEFAULT_IMAGE = require("@/assets/images/news-placeholder.png");
 
-export function NewsImage({ imageUrl, className, ...props }: NewsImageProps) {
+export function NewsImage({ imageUrl, style, ...props }: NewsImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const opacity = useState(new Animated.Value(0))[0];
   const [isBlurred, setIsBlurred] = useState(true);
-  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
 
-  
   const handleLoadEnd = () => {
     setIsLoading(false);
     setIsBlurred(false);
@@ -33,7 +34,7 @@ export function NewsImage({ imageUrl, className, ...props }: NewsImageProps) {
   };
 
   return (
-    <View className={`relative ${className}`}>
+    <View style={[styles.container, style]}>
       <Animated.Image
         source={hasError || !imageUrl ? DEFAULT_IMAGE : { uri: imageUrl }}
         onLoadStart={() => setIsLoading(true)}
@@ -42,15 +43,16 @@ export function NewsImage({ imageUrl, className, ...props }: NewsImageProps) {
           setHasError(true);
           setIsLoading(false);
         }}
-        className="w-full h-full"
-        style={{
-          opacity,
-        }}
-        blurRadius={isBlurred ? 5 : 0}
+        style={[
+          styles.image,
+          {
+            opacity,
+          },
+        ]}
         {...props}
       />
       {isLoading && (
-        <View className="absolute inset-0 flex items-center justify-center bg-gray-100">
+        <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#3b82f6" />
         </View>
       )}

@@ -3,6 +3,7 @@ import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Sharing from "expo-sharing";
 import { NewsResult } from "@/store/types/news.types";
+import { styles } from "./styles";
 
 interface ShareButtonProps {
   article: NewsResult;
@@ -22,11 +23,8 @@ export function ShareButton({ article }: ShareButtonProps) {
   };
 
   return (
-    <TouchableOpacity
-      onPress={handleShare}
-      className="p-2 rounded-full bg-gray-100 mb-2"
-    >
-      <Ionicons name="share-outline" size={24} color="#6b7280" />
+    <TouchableOpacity onPress={handleShare} style={styles.button}>
+      <Ionicons name="share-outline" size={24} style={styles.icon} />
     </TouchableOpacity>
   );
 }

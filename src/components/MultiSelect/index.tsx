@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { options } from "@/store/types/onboarding";
+import { styles, createOptionStyles } from "./styles";
 
 interface MultiSelectProps {
   selected: string[];
@@ -29,32 +30,26 @@ export function MultiSelect({ selected, setSelected }: MultiSelectProps) {
   };
 
   return (
-    <View className="w-full mb-4 items-center">
-      <Text className="text-base font-light mb-3 text-gray-950">
-        Escolha suas categorias favoritas:
-      </Text>
-      <View className="flex flex-row flex-wrap justify-center">
+    <View style={styles.container}>
+      <Text style={styles.label}>Escolha suas categorias favoritas:</Text>
+      <View style={styles.optionsContainer}>
         {options.map((option) => {
           const isSelected = selected.includes(option.value);
+          const optionStyles = createOptionStyles({ isSelected });
+
           return (
             <TouchableOpacity
               key={option.label}
               onPress={() => toggleOption(option.value)}
-              className={`px-4 py-2 rounded-full mr-2 border mb-2 ${
-                isSelected
-                  ? "bg-blue-500 border-blue-500"
-                  : "bg-transparent border-gray-300"
-              }`}
+              style={optionStyles.option}
             >
-              <Text className={isSelected ? "text-white" : "text-black"}>
-                {option.label}
-              </Text>
+              <Text style={optionStyles.optionText}>{option.label}</Text>
             </TouchableOpacity>
           );
         })}
       </View>
       {limitReached && (
-        <Text className="text-red-500 mb-2">
+        <Text style={styles.limitText}>
           Você só pode selecionar até 5 categorias.
         </Text>
       )}

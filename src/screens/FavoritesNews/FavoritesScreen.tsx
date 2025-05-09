@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Text } from "react-native";
+import { View, FlatList, Text, StyleSheet } from "react-native";
 import { useFavoriteStore } from "@/store/favoriteStore";
 import { NewsCard } from "@/components/NewsCard";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -24,20 +24,44 @@ export function FavoritesScreen() {
   const { savedNews } = useFavoriteStore();
   const navigation = useNavigation<FavoritesNavigationProp>();
   const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: isDarkTheme ? "#111827" : "#f1f5f9",
+    },
+    emptyContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 16,
+    },
+    emptyText: {
+      fontSize: 18,
+      textAlign: "center",
+      color: isDarkTheme ? "#d1d5db" : "#4b5563",
+    },
+    contentContainer: {
+      flex: 1,
+      paddingHorizontal: 16,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: "bold",
+      marginVertical: 16,
+      color: isDarkTheme ? "#ffffff" : "#1f2937",
+    },
+    listContent: {
+      paddingVertical: 16,
+    },
+  });
 
   if (savedNews.length === 0) {
     return (
-      <SafeAreaView
-        className={`flex-1 ${
-          theme === "dark" ? "bg-gray-900" : "bg-slate-100"
-        }`}
-      >
-        <View className="flex-1 items-center justify-center p-4">
-          <Text
-            className={`text-lg text-center ${
-              theme === "dark" ? "text-gray-300" : "text-gray-600"
-            }`}
-          >
+      <SafeAreaView style={styles.container}>
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>
             Você ainda não tem notícias salvas.{"\n"}
             Favorite algumas notícias para vê-las aqui!
           </Text>
@@ -47,17 +71,9 @@ export function FavoritesScreen() {
   }
 
   return (
-    <SafeAreaView
-      className={`flex-1 ${theme === "dark" ? "bg-gray-900" : "bg-slate-100"}`}
-    >
-      <View className="flex-1 px-4">
-        <Text
-          className={`text-xl font-bold my-4 ${
-            theme === "dark" ? "text-white" : "text-gray-800"
-          }`}
-        >
-          Favoritos
-        </Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.contentContainer}>
+        <Text style={styles.title}>Favoritos</Text>
         <FlatList
           data={savedNews}
           renderItem={({ item }) => {
@@ -72,7 +88,7 @@ export function FavoritesScreen() {
             );
           }}
           keyExtractor={(item) => item.article_id}
-          contentContainerStyle={{ paddingVertical: 16 }}
+          contentContainerStyle={styles.listContent}
         />
       </View>
     </SafeAreaView>
