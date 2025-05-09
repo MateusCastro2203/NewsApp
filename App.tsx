@@ -6,7 +6,6 @@ import { StatusBar } from "expo-status-bar";
 import { OnboardingScreen } from "@/components/OnboardingScreen";
 import { useOnboardingStore } from "./src/store/onboarding";
 import { AppNavigator } from "@/navigation/AppNavigator";
-import "./global.css";
 import { initializeStorage } from "@/services/useOfflineStorage";
 import { useToast } from "@/hooks/useToast";
 import { Toast } from "@/components/Toast";
