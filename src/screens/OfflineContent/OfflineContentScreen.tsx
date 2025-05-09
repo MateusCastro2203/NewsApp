@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useOfflineStore } from "@/store/offlineStorage";
 import { NewsCard } from "@/components/NewsCard";
@@ -15,6 +15,7 @@ import {
 } from "@/navigation/AppNavigator";
 import { NewsResult } from "@/store/types/news.types";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type OfflineScreenNavigationProp = CompositeNavigationProp<
   DrawerNavigationProp<RootDrawerParamList, "OfflineContent">,
@@ -25,10 +26,45 @@ export function OfflineContentScreen() {
   const { articles } = useOfflineStore();
   const { isConnected } = useNetworkStatus();
   const navigation = useNavigation<OfflineScreenNavigationProp>();
+  const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: isDarkTheme ? "#111827" : "#f1f5f9",
+    },
+    content: {
+      paddingVertical: 16,
+      paddingHorizontal: 16,
+    },
+    emptyContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 16,
+    },
+    emptyText: {
+      fontSize: 18,
+      color: isDarkTheme ? "#d1d5db" : "#4b5563",
+      textAlign: "center",
+    },
+    offlineAlert: {
+      backgroundColor: "#fef3c7",
+      padding: 16,
+    },
+    offlineText: {
+      color: "#92400e",
+    },
+    listContent: {
+      paddingVertical: 16,
+    },
+  });
+
   const isOffline = useMemo(() => {
     return (
-      <View className="bg-yellow-100 p-4">
-        <Text className="text-yellow-800">
+      <View style={styles.offlineAlert}>
+        <Text style={styles.offlineText}>
           Você está offline. Apenas conteúdo baixado está disponível.
         </Text>
       </View>
@@ -37,9 +73,9 @@ export function OfflineContentScreen() {
 
   if (articles.length === 0) {
     return (
-      <SafeAreaView className="flex-1 bg-slate-100">
-        <View className="flex-1 items-center justify-center p-4">
-          <Text className="text-lg text-gray-600 text-center">
+      <SafeAreaView style={styles.container}>
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>
             Você ainda não tem notícias salvas offline.{"\n"}
             Baixe algumas notícias para ler sem internet!
           </Text>
@@ -59,13 +95,13 @@ export function OfflineContentScreen() {
   );
 
   return (
-    <View className="py-4 px-4">
+    <View style={styles.content}>
       {!isConnected && isOffline}
       <FlatList
         data={articles}
         renderItem={renderItem}
         keyExtractor={(item) => item.article_id}
-        contentContainerStyle={{ paddingVertical: 16 }}
+        contentContainerStyle={styles.listContent}
       />
     </View>
   );

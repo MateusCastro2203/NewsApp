@@ -1,8 +1,9 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useFavoriteStore } from "@/store/favoriteStore";
 import { NewsResult } from "@/store/types/news.types";
+import { styles } from "./styles";
 
 interface FavoriteButtonProps {
   article: NewsResult;
@@ -28,11 +29,7 @@ export function FavoriteButton({
   };
 
   return (
-    <TouchableOpacity
-      onPress={toggleFavorite}
-      style={style}
-      className="p-2 rounded-full bg-gray-100 mb-2"
-    >
+    <TouchableOpacity onPress={toggleFavorite} style={[styles.button, style]}>
       <Ionicons
         name={isFavorited ? "heart-circle" : "heart-circle-outline"}
         size={size}

@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { View, Animated, Easing } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
+import { createStyles } from "./styles";
 
 export const TypingIndicator = () => {
   const { theme } = useTheme();
-  const dotColor = theme === "dark" ? "#ffffff" : "#374151";
+  const isDarkTheme = theme === "dark";
+  const dotColor = isDarkTheme ? "#ffffff" : "#374151";
+  const styles = createStyles({ isDarkTheme, dotColor });
 
   // Valores de animação para cada ponto
   const dot1Opacity = useRef(new Animated.Value(0.3)).current;
@@ -65,23 +68,11 @@ export const TypingIndicator = () => {
     };
   }, []);
 
-  const dotStyle = {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-    backgroundColor: dotColor,
-    marginHorizontal: 3,
-  };
-
   return (
-    <View
-      className={`mb-2 p-3 rounded-lg flex-row max-w-[80%] ${`self-start ${
-        theme === "dark" ? "bg-gray-700" : "bg-gray-200"
-      }`}`}
-    >
-      <Animated.View style={[dotStyle, { opacity: dot1Opacity }]} />
-      <Animated.View style={[dotStyle, { opacity: dot2Opacity }]} />
-      <Animated.View style={[dotStyle, { opacity: dot3Opacity }]} />
+    <View style={styles.container}>
+      <Animated.View style={[styles.dot, { opacity: dot1Opacity }]} />
+      <Animated.View style={[styles.dot, { opacity: dot2Opacity }]} />
+      <Animated.View style={[styles.dot, { opacity: dot3Opacity }]} />
     </View>
   );
 };

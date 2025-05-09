@@ -30,6 +30,7 @@ const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
 function DrawerNavigator() {
   const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
 
   return (
     <Drawer.Navigator
@@ -40,12 +41,12 @@ function DrawerNavigator() {
         drawerType: "front",
         drawerStyle: {
           width: "75%",
-          backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+          backgroundColor: isDarkTheme ? "#1f2937" : "#ffffff",
         },
         headerStyle: {
-          backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+          backgroundColor: isDarkTheme ? "#1f2937" : "#ffffff",
         },
-        headerTintColor: theme === "dark" ? "#ffffff" : "#000000",
+        headerTintColor: isDarkTheme ? "#ffffff" : "#000000",
       }}
     >
       <Drawer.Screen
@@ -91,14 +92,15 @@ function DrawerNavigator() {
 
 export const AppNavigator = () => {
   const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
 
   return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+          backgroundColor: isDarkTheme ? "#1f2937" : "#ffffff",
         },
-        headerTintColor: theme === "dark" ? "#ffffff" : "#000000",
+        headerTintColor: isDarkTheme ? "#ffffff" : "#000000",
       }}
     >
       <Stack.Screen

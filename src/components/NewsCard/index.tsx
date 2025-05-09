@@ -1,13 +1,14 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { NewsResult } from "@/store/types/news.types";
 import { RootStackParamList } from "@/navigation/AppNavigator";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { NewsImage } from "./NewsImage";
-import { OfflineButton } from "./OfflineButton";
+import { NewsImage } from "@/components/NewsImage";
+import { OfflineButton } from "@/components/OfflineButton";
 import { useTheme } from "@/contexts/ThemeContext";
+import { createStyles } from "./styles";
 
 interface NewsCardProps {
   item: NewsResult;
@@ -21,40 +22,27 @@ export const NewsCard = ({
   handlePress,
 }: NewsCardProps) => {
   const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
+  const styles = createStyles({ isDarkTheme });
 
   return (
-    <TouchableOpacity
-      onPress={handlePress}
-      className={`w-full mb-4 rounded-lg overflow-hidden shadow-md ${
-        theme === "dark" ? "bg-gray-800" : "bg-white"
-      }`}
-    >
+    <TouchableOpacity onPress={handlePress} style={styles.container}>
       <NewsImage
         imageUrl={item.image_url}
-        className="w-full h-52"
+        style={styles.image}
         resizeMode="cover"
       />
       {showFavoriteButton && (
-        <View className="absolute top-2 right-2">
+        <View style={styles.buttonsContainer}>
           <FavoriteButton article={item} />
         </View>
       )}
 
-      <View className="p-4">
-        <Text
-          className={`text-lg font-bold ${
-            theme === "dark" ? "text-white" : "text-gray-800"
-          }`}
-          numberOfLines={2}
-        >
+      <View style={styles.contentContainer}>
+        <Text style={styles.title} numberOfLines={2}>
           {item.title}
         </Text>
-        <Text
-          className={`text-sm ${
-            theme === "dark" ? "text-gray-300" : "text-gray-600"
-          } mt-2`}
-          numberOfLines={3}
-        >
+        <Text style={styles.description} numberOfLines={3}>
           {item.description}
         </Text>
       </View>
